@@ -81,11 +81,12 @@ for kluc in zoradene:
     x+=10
 '''    
     
-#uloha9 a 10
+#uloha9,10
 '''
 import tkinter
 canvas = tkinter.Canvas(width=1000, height=800)
 canvas.pack()
+
 subor = open('slovne_hodnotenia.txt', 'r',encoding='utf-8')
 subor1 = open('vynimky.txt', 'r',encoding='utf-8')
 subor2 = open('pocetnost.txt', 'w',encoding='utf-8')
@@ -150,6 +151,41 @@ rozsvietene = None
 canvas.bind('<Motion>', mys)
 '''
 
+#uloha11
+'''
+import random
+subor = open('slovne_hodnotenia.txt', 'r',encoding='utf-8')
+celytext = subor.read()
+celytext = celytext.split()
+subor.close()
+
+slova = []
+for slovo in celytext:
+    if not slovo in slova:
+        slova.append(slovo)
+slova_zamiesane = slova[:]
+
+
+random.shuffle(slova_zamiesane)
+
+substitucia = {}
+for i in range(len(slova)):
+    substitucia[slova[i]] = slova_zamiesane[i]
+
+celytext_sifrovany = ''
+for slovo in celytext:
+    celytext_sifrovany = celytext_sifrovany + substitucia[slovo]
+
+subor_sifrovany = open('slovne_hodnotenia_sifrovane.txt', 'w')
+subor_sifrovany.write(celytext_sifrovany)
+subor_sifrovany.close()
+
+subor_tabulka = open('slovne_hodnotenia_kluc.txt', 'w')
+for kluc, hodnota in substitucia.items():
+    subor_tabulka.write(kluc+';'+hodnota+';')
+subor_tabulka.close()
+'''
+
 #uloha12
 '''
 import tkinter
@@ -197,4 +233,63 @@ for pocet,slovo in kopia[::-1]:
     poradie+=1
 '''
 
+#uloha13
+'''
+subor = open('osoby.txt', 'r')
+menar = []
+menam = []
+r = int(input('Zadaj rok:'))
+m = input('Zadaj mesto:')
+for riadok in subor:
+    info = riadok.split(';')
+    if int(info[2]) == r:
+        menar.append(info[0])
+    if info[3].strip() == m:
+        menam.append(info[0])
+subor.close()
+print('Osoby narodene v meste',m,'sú',menam)
+print('Osoby narodene v roku',r,'sú',menar)
+'''
 
+#uloha14
+'''
+subor = open('osoby.txt', 'r')
+vyska = 0
+vek = 1000
+for riadok in subor:
+    info = riadok.split(';')
+    if 2022-int(info[2]) < vek:
+        vek = 2022-int(info[2])
+        ovek = info[0]
+    if int(info[1]) > vyska:
+        vyska = int(info[1])
+        ovys = info[0]
+subor.close()
+print('Najvyššia osoba je',ovys)
+print('Najmladšia osoba je',ovek)
+'''
+
+#uloha15
+'''
+subor = open('eu_sk.csv','r')
+obyvatelia = 0
+p=0
+rozloha = 0
+m = ''
+for riadok in subor:
+    p+=1
+    riadok = riadok.replace(',','.')
+    riadok = riadok.replace(' ','')
+    riadok = riadok.strip()
+    riadok = riadok.split(';')
+    obyvatelia += float(riadok[2])
+    if int(riadok[3]) > rozloha:
+        rozloha = int(riadok[3])
+        m = riadok[0]
+obyvatelia = obyvatelia/p    
+subor.close()
+print('Priemerný počet obyvateľov je',obyvatelia,'miliónov.')
+print('Najväčšiu rozlohu má',m,'a je',rozloha)
+'''
+
+#uloha16
